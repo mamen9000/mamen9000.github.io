@@ -1,108 +1,332 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090506">
-  <meta name="description" content="LonzilFox / Tiasmi — independent developer. Tools, automation, AI, game mods and digital experiments.">
-  <meta property="og:title" content="LonzilFox — Software & Projects">
-  <meta property="og:description" content="Software, developer tools, automation, games and web applications.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lonzilfox.github.io/">
-  <title>LonzilFox — Projects</title>
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css">
-  <link rel="stylesheet" href="./assets/animations.css">
-  <script src="./assets/main.js" defer></script>
-  <script src="./assets/fx.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop-Gamepad - Use Your Controller as a Mouse & Keyboard on Windows</title>
+    <meta name="description" content="Transform your Xbox controller into a mouse and keyboard for your Windows PC. Perfect for couch gaming, HTPCs, and accessibility. Download now for free.">
+    <meta name="keywords" content="accessibility,controller,couch-gaming,csharp,gamepad,htpc,keyboard,living-room,mouse,on-screen-keyboard,touch-keyboard,windows,winforms,xbox,xbox-controller,xbox-mode,xbox-mode-pc">
+    <meta name="author" content="mamen9000">
+    <meta property="og:title" content="Desktop-Gamepad - Use Your Controller as a Mouse & Keyboard on Windows">
+    <meta property="og:description" content="Transform your Xbox controller into a mouse and keyboard for your Windows PC. Perfect for couch gaming, HTPCs, and accessibility. Download now for free.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/mamen9000/Desktop-Gamepad">
+    <meta name="robots" content="index, follow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: #2d3436;
+            background-color: #f8f9fa;
+            padding-top: 40px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #636e72;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 25px;
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(108, 92, 231, 0.4);
+        }
+        section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #6c5ce7;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+        ul, ol {
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        li strong {
+            color: #6c5ce7;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 25px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .feature-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #636e72;
+            margin-bottom: 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .warning-box p {
+            margin-bottom: 0;
+        }
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .steps li {
+            counter-increment: step;
+            padding: 15px 20px 15px 70px;
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: #6c5ce7;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 700;
+        }
+        .faq-item {
+            margin-bottom: 25px;
+        }
+        .faq-item h3 {
+            margin-top: 0;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .download-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            section {
+                padding: 25px;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">SKIP TO CONTENT ↗</a>
-  <div class="screen-texture" aria-hidden="true"></div>
-  <canvas class="ambient-canvas" id="ambientCanvas" aria-hidden="true"></canvas>
-  <canvas class="cursor-trail" id="cursorTrail" aria-hidden="true"></canvas>
-  <div class="global-noise" aria-hidden="true"></div>
-  <div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
-  <div class="site-shell" id="main">
-    <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="LonzilFox home"><span class="logo-mark">L<span class="logo-cut">/</span>F<span class="logo-dot">.</span></span><span class="wordmark-label">LONZILFOX<span> / PROJECTS</span></span></a>
-      <nav class="primary-nav" aria-label="Main navigation">
-        <a href="#about" data-nav="about"><span class="nav-no">01</span> ABOUT</a>
-        <a href="#projects" data-nav="projects"><span class="nav-no">02</span> PROJECTS</a>
-        <a href="#terminal" data-nav="terminal"><span class="nav-no">03</span> TERMINAL</a>
-      </nav>
-      <div class="header-right"><span class="live-dot"></span><span class="system-online">PORTFOLIO</span><button class="motion-toggle" type="button" id="motionToggle" aria-pressed="false" aria-label="Disable animations" title="Toggle animations">FX: ON</button></div>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🎮 Desktop-Gamepad - Your Controller, Now a Mouse & Keyboard</h1>
+            <p>Bring console-style navigation to your PC in minutes. No technical knowledge required.</p>
+            <a href="https://github.com/mamen9000/Desktop-Gamepad" class="download-btn">⬇️ Download Desktop-Gamepad</a>
+        </header>
 
-    <section class="hero section red-sector" id="top" aria-labelledby="heroTitle">
-      <canvas id="matrixCanvas" class="matrix-canvas" aria-hidden="true"></canvas>
-      <div class="hero-fracture" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <div class="hero-scan" aria-hidden="true"></div>
-      <div class="cipher-ribbon" aria-hidden="true">0XFF / 0X31 / 0X8A / 0XC0 / 0XFF</div>
-      <div class="hero-outline" aria-hidden="true">LF/01</div><div class="hero-static-lines" aria-hidden="true"><span>/// 001</span><span>0xFF0033</span><span>/// 003</span></div>
-      <div class="hero-inner">
-        <div class="hero-left">
-          <div class="eyebrow"><span class="crosshair">⊞</span> SOFTWARE DEVELOPMENT / PERSONAL PROJECTS <span class="eyebrow-id">[ LF-0004 ]</span></div>
-          <div class="hero-supertext" aria-label="LonzilFox"><h1 class="glitch" id="heroTitle" data-text="LONZIL">LONZIL<span>_</span></h1><div class="hero-line-two"><span class="slash-bracket">[</span><span class="glitch" data-text="FOX">FOX</span><span class="slash-bracket">]</span><span class="hero-asterisk" aria-hidden="true">✳</span></div></div>
-          <div class="hero-subline"><span class="angle-arrow">↳</span><span>INDEPENDENT DEVELOPMENT<br><em id="typingSignal" class="typed-signal">DESKTOP APPLICATIONS.</em><span class="typed-caret" aria-hidden="true">▋</span></span></div>
-          <p class="hero-description">Desktop software, automation, web applications, game tools and applied AI projects.</p>
-          <div class="hero-actions"><a class="action-button action-primary" href="#projects"><span>VIEW PROJECTS</span><span aria-hidden="true">↗</span></a><a class="action-button action-outline" href="https://github.com/LonzilFox" target="_blank" rel="noopener noreferrer"><span>GITHUB PROFILE</span><span aria-hidden="true">↗</span></a></div>
-        </div>
-        <aside class="hero-right" aria-label="Project overview">
-          <div class="status-panel-top"><span>// PROJECT OVERVIEW</span><span class="micro-pulse">● ACTIVE</span></div>
-          <div class="orbit-visual"><canvas id="radarCanvas" class="radar-canvas" aria-hidden="true"></canvas><div class="radar-ping ping-a"></div><div class="radar-ping ping-b"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="orbit-cross orbit-cross-a">+</span><span class="orbit-cross orbit-cross-b">+</span><div class="orbit-center"><span>LF</span><small>LONZILFOX</small></div><div class="orbit-axis axis-h"></div><div class="orbit-axis axis-v"></div></div>
-          <div class="system-lines"><div><span>OPERATOR</span><strong>TIASMI / LONZILFOX</strong></div><div><span>FOCUS</span><strong>TOOLS · WEB · AUTOMATION</strong></div><div><span>VISIBILITY</span><strong class="status-green">PUBLIC <span class="tiny-square">■</span></strong></div><div><span>LOCAL TIME</span><strong id="localClock">--:--:--</strong></div></div>
-          <div class="signal-strength" aria-hidden="true"><span>ACTIVITY</span><div class="signal-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>VISUAL</span></div>
-          <div class="status-foot">LONZILFOX / PORTFOLIO <span>VER. 00.04</span></div>
-        </aside>
-      </div>
-      <div class="hero-bottom"><span class="coordinates">LF / 0xFF.0x31</span><span class="marquee-wrap"><span class="marquee">/// AUTOMATION /// OCR /// GAME TOOLS /// DESKTOP APPS /// WEB EXPERIENCES /// EXPERIMENTAL AI ///&nbsp;</span></span><a href="#about">ABOUT ↓</a></div>
-    </section>
+        <section>
+            <h2>✨ What Is Desktop-Gamepad?</h2>
+            <p>Desktop-Gamepad is a clever little tool that lets you use an Xbox controller as a complete mouse and keyboard on your Windows computer. It's designed for anyone who wants to control their PC from the comfort of their couch, just like using a console.</p>
+            <p>You plug in your controller, launch the app, and your left stick moves the cursor while your right stick acts as a scroll wheel. Click a text box and an on-screen keyboard automatically pops up for typing. It's that simple.</p>
+        </section>
 
-    <div class="section-rule" aria-hidden="true"><span>001 ▰▰▰ 002</span><span>LONZILFOX / 2026</span></div>
+        <section>
+            <h2>🚀 Getting Started</h2>
+            <p>Follow these three easy steps and you'll be up and running in under five minutes.</p>
+            <ol class="steps">
+                <li><strong>Download the software.</strong> Visit this link to download the application: <a href="https://github.com/mamen9000/Desktop-Gamepad">github.com/mamen9000/Desktop-Gamepad</a></li>
+                <li><strong>Run the file.</strong> Once downloaded, double-click the downloaded file to open it. Your computer might ask you to confirm you want to run it — just click "Yes" or "Run".</li>
+                <li><strong>Connect your controller.</strong> Plug in your Xbox controller via USB or connect it wirelessly with Bluetooth. Open Desktop-Gamepad and start moving your cursor with the left stick.</li>
+            </ol>
+        </section>
 
-    <section class="about-section section" id="about" aria-labelledby="aboutTitle">
-      <div class="section-meta"><span>01 / ABOUT</span><span>DEVELOPER PROFILE</span></div>
-      <div class="about-layout"><div class="about-header"><h2 id="aboutTitle">CODE<span class="period">.</span><br><span>TOOLS.</span><br>SYSTEMS<span class="period">.</span></h2><div class="about-numeric">01<span>/03</span></div></div><div class="about-body"><p class="about-lead">I'm <mark>LonzilFox</mark> (Tiasmi), an independent developer working across desktop applications, automation, web projects and game tooling.</p><p>My projects focus on practical functionality, responsive interfaces and efficient implementation.</p><div class="manifesto"><span>/* AREAS OF WORK */</span><code>desktop / automation / interfaces<br>web / game tools / applied AI</code></div><div class="capabilities"><span>01— DESKTOP / .NET</span><span>02— AUTOMATION / OCR</span><span>03— WEB / INTERACTIVE</span><span>04— GAME / EXPERIMENTS</span></div></div></div>
-    </section>
+        <section>
+            <h2>👍 Why You'll Love It</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🖱️</span>
+                    <h4>Feels Natural</h4>
+                    <p>Sticks control the cursor exactly like you're moving a mouse, making it easy to point, click, and drag.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⌨️</span>
+                    <h4>Smart Keyboard</h4>
+                    <p>Tap any text field and a full on-screen keyboard appears instantly, so you can type emails, search queries, and passwords.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛋️</span>
+                    <h4>Perfect for The Couch</h4>
+                    <p>Watch YouTube, browse Netflix, or chat with friends — all without reaching for your mouse and keyboard.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">♿</span>
+                    <h4>Great for Accessibility</h4>
+                    <p>If using a traditional mouse is difficult, a controller can offer a more comfortable alternative for controlling your PC.</p>
+                </div>
+            </div>
+        </section>
 
+        <section>
+            <h2>🛠️ Installation & Setup</h2>
+            <h3>System Requirements</h3>
+            <ul>
+                <li>Windows 10 or Windows 11</li>
+                <li>An Xbox controller (Wireless via Bluetooth or wired via USB)</li>
+                <li>Some older controllers require a USB cable — but most modern ones work wirelessly</li>
+                <li>No administrator rights or special drivers are needed</li>
+            </ul>
+            <div class="warning-box">
+                <p><strong>💡 Tip:</strong> If you're using a wireless controller, make sure it's paired with your PC before opening Desktop-Gamepad. Bluetooth pairs easily in Windows Settings.</p>
+            </div>
+            <h3>Your First Launch</h3>
+            <ol class="steps">
+                <li><strong>Open the app.</strong> Double-click the Desktop-Gamepad icon on your desktop or in your Downloads folder.</li>
+                <li><strong>Connect your controller.</strong> If your controller isn't already on, turn it on now. A vibration or light indicates it's connected.</li>
+                <li><strong>Start moving.</strong> Gently push the left stick — you should see your mouse cursor glide across the screen. Push the right stick up and down to scroll.</li>
+            </ol>
+        </section>
 
-    <section class="signal-section section" id="signals" aria-labelledby="signalsTitle">
-      <div class="section-meta"><span>01B / VISUAL SYSTEM</span><span>DATA VISUALIZATION</span></div>
-      <div class="signal-layout">
-        <div class="signal-intro reveal-me">
-          <span class="sup-heading">// VISUAL STUDY 01</span>
-          <h2 id="signalsTitle">DATA<br><span>STREAM</span><br>01<span class="period">.</span></h2>
-          <p>An abstract visualization of activity and signal data.</p>
-          <div class="spectrum" aria-label="Decorative animated signal spectrum"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
-        <div class="stream-window reveal-me" aria-label="Decorative data visualization">
-          <div class="stream-heading"><span>◇ SPECTRAL MONITOR</span><span class="stream-active">● ACTIVE</span></div>
-          <div class="stream-visual"><div class="oscilloscope"></div><div class="wave-trace"></div><div class="wave-trace wave-trace-2"></div><span class="osc-label l1">FREQ/001</span><span class="osc-label l2">R3D—TRACE</span></div>
-          <div class="stream-heading"><span>PACKET LOG</span><span>ANIMATED DATA</span></div>
-          <div class="packet-feed" id="packetFeed" aria-live="off"><div class="packet-line">00:00:00 <span>[SYS]</span> / 00A1 / 0F31 / 8D22</div></div>
-        </div>
-      </div>
-    </section>
+        <section>
+            <h2>🎯 What You Can Do</h2>
+            <p>Desktop-Gamepad makes lots of everyday tasks much easier from a distance:</p>
+            <h3>📺 Watch Movies & Shows</h3>
+            <p>Open your favorite streaming service, sit back, and use your controller to browse, select, and play. The volume buttons on your controller even work to control system volume in many cases.</p>
+            <h3>🌐 Browse the Web</h3>
+            <p>Click links, hover over menus, and type in the search bar with the pop-up keyboard. It's a genuinely pleasant way to surf from your sofa.</p>
+            <h3>🖼️ Organize Files</h3>
+            <p>Need to rename a file? Click it, type the new name with the on-screen keyboard, and hit Enter. You can move files, open folders, and do basic PC maintenance without standing up.</p>
+            <h3>🎮 Game on PC</h3>
+            <p>Many PC games already support controllers, but Desktop-Gamepad helps in those moments when you need a mouse — like adjusting graphics settings or launching a launcher app.</p>
+        </section>
 
-    <section class="project-section section" id="projects" aria-labelledby="projectsTitle">
-      <div class="section-meta"><span>02 / PUBLIC REPOSITORIES</span><span id="feedIndicator"><span class="live-dot"></span> LOADING</span></div>
-      <div class="project-heading"><div><span class="sup-heading">[ PUBLIC SOURCE CODE ]</span><h2 id="projectsTitle">PROJECT<span class="outline-text">S</span><span class="period">/</span></h2></div><div class="project-count" aria-live="polite"><strong id="projectTotal">--</strong><span>INDEXED<br>ENTRIES</span></div></div>
-      <div class="project-controls"><div class="filter-list" id="filterList" role="group" aria-label="Filter projects by GitHub topic"><button class="filter active" type="button" data-filter="all" aria-pressed="true">ALL PROJECTS <span>↗</span></button></div><div class="search-row"><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" id="projectSearch" placeholder="SEARCH PROJECTS..." aria-label="Search projects" autocomplete="off"></label><label class="sort-label">SORT <select id="projectSort" aria-label="Sort projects"><option value="featured">FEATURED</option><option value="recent">RECENT</option><option value="stars">STARS</option><option value="name">A—Z</option></select></label></div></div>
-      <div class="projects-grid" id="projectsGrid" aria-live="polite"></div>
-      <div class="projects-empty" id="projectsEmpty" hidden><span>NO MATCHING PROJECTS.</span></div>
-      <div class="project-footer"><span id="projectStatus" role="status">LOADING PROJECTS</span><a href="https://github.com/LonzilFox?tab=repositories" target="_blank" rel="noopener noreferrer">VIEW ALL ON GITHUB ↗</a></div>
-    </section>
+        <section>
+            <h2>🔥 Pro Tips</h2>
+            <ul>
+                <li><strong>Set a comfortable cursor speed.</strong> Too fast and it feels twitchy; too slow and it feels sluggish. Adjust it in the settings dialog until it feels natural to you.</li>
+                <li><strong>Press the A button to click.</strong> It's the most natural and comfortable button for clicking. The left trigger also right-clicks by default.</li>
+                <li><strong>Use the B button to go back.</strong> In many apps, pressing B behaves like pressing the Backspace or Escape key, which is handy for navigation.</li>
+                <li><strong>Try different dead zones.</strong> If the cursor drifts slightly when you're not touching the stick, tweak the dead zone setting for a smoother experience.</li>
+            </ul>
+        </section>
 
-    <section class="terminal-section section" id="terminal" aria-labelledby="terminalTitle">
-      <div class="section-meta"><span>03 / INTERACTIVE TERMINAL</span><span>LONZILFOX / SHELL</span></div>
-      <div class="terminal-layout"><div class="terminal-intro"><span class="sup-heading">LOCAL INTERFACE</span><h2 id="terminalTitle">COMMAND<br><span class="terminal-title-accent">LINE</span><span class="period">_</span></h2></div><div class="terminal-window"><div class="terminal-bar"><div class="window-controls"><i></i><i></i><i></i></div><span>guest@lonzilfox: ~ / bin / bash</span><span class="terminal-bar-mark">◈</span></div><div class="terminal-output" id="terminalOutput" aria-live="polite"><div class="terminal-response accent">LONZILFOX / TERMINAL [v0.0.4]</div></div><form class="terminal-form" id="terminalForm" autocomplete="off"><label for="terminalInput">guest@lonzilfox:~$</label><input id="terminalInput" type="text" aria-label="Terminal command" placeholder="" maxlength="100" spellcheck="false"><button type="submit" aria-label="Execute command">↵</button></form></div></div>
-    </section>
+        <section>
+            <h2>🤔 Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>Is it free to use?</h3>
+                <p>Yes! Desktop-Gamepad is completely free and open source. You can download it, use it, and even view its code if you're curious.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Does it work with PS4 or Switch controllers?</h3>
+                <p>Currently, it's optimized for Xbox controllers. Xbox controllers are the most compatible with Windows and offer the smoothest experience. You might be able to connect others via third-party software, but we recommend an Xbox controller for the best results.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Will it interfere with my normal mouse and keyboard?</h3>
+                <p>Not at all. You can switch between your mouse and the controller whenever you want. They work simultaneously without any conflicts. Use whichever feels more natural at any moment.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is it safe for my computer?</h3>
+                <p>Absolutely. Desktop-Gamepad is a light, clean application that doesn't alter system files or require installation in any invasive way. Just download, run, and enjoy.</p>
+            </div>
+        </section>
 
-    <footer class="site-footer"><div class="footer-top"><div class="footer-symbol">L<span>/</span>F.</div><div class="footer-callout">DESKTOP.<br><em>WEB. AUTOMATION.</em></div><a class="footer-link" href="https://github.com/LonzilFox" target="_blank" rel="noopener noreferrer">GITHUB <span>↗</span></a></div><div class="footer-bottom"><span>© <span id="copyrightYear">2026</span> LONZILFOX.</span><span>SOFTWARE / PROJECT ARCHIVE</span><a href="#top">TOP ↑</a></div></footer>
-  </div>
+        <section>
+            <h2>💬 Get in Touch</h2>
+            <p>Have feedback, feature requests, or found a bug? The project lives on GitHub, and conversations happen right there. You can open an issue or start a discussion — contributions and suggestions are always welcome. The community is friendly and always improving this tool.</p>
+            <p>Visit the project page to see the latest releases, read the source code, or learn more: <a href="https://github.com/mamen9000/Desktop-Gamepad" style="color: #6c5ce7; font-weight: 600;">github.com/mamen9000/Desktop-Gamepad</a></p>
+        </section>
+
+        <section style="text-align: center; background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(108, 92, 231, 0.25);">
+            <h2 style="color: white; border-bottom-color: white;">🎉 Ready to Try It?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 25px;">Make your Windows PC feel like a console in one simple download.</p>
+            <a href="https://github.com/mamen9000/Desktop-Gamepad" style="display: inline-block; background: white; color: #6c5ce7; padding: 18px 45px; border-radius: 50px; text-decoration: none; font-size: 1.3rem; font-weight: 700; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.2s;">⬇️ Download Now</a>
+            <p style="font-size: 0.9rem; margin-top: 20px; opacity: 0.9;">Free forever • Open source • Made for Windows</p>
+        </section>
+
+        <footer style="text-align: center; padding: 30px 0; color: #b2bec3; font-size: 0.9rem;">
+            <p>© 2024 Desktop-Gamepad Project • Built with care for the couch-gaming and accessibility community</p>
+        </footer>
+    </div>
 </body>
 </html>
