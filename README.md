@@ -1,97 +1,90 @@
 <div align="center">
-  <img src="./assets/profile-banner.gif" alt="LonzilFox animated cyber terminal banner" width="100%">
 
-  # LONZILFOX // PERSONAL NETWORK
-  **Deconstructed cyberpunk portfolio · GitHub Pages · Live project archive**
+# LONZILFOX / REDACTED SIGNAL ARCHIVE
 
-  [![Website](https://img.shields.io/badge/ENTER_THE_ARCHIVE-c7fc69?style=for-the-badge&logo=githubpages&logoColor=080a0b)](https://lonzilfox.github.io/)
-  [![GitHub](https://img.shields.io/badge/OPERATOR-LonzilFox-141918?style=for-the-badge&logo=github&logoColor=white)](https://github.com/LonzilFox)
+**Blood-red glitch · Animated spectral radar · Hacker terminal · Topic-driven portfolio**
+
+[OPEN LIVE WEBSITE](https://lonzilfox.github.io/) · [GITHUB PROFILE](https://github.com/LonzilFox) · [TOPIC CLASSIFICATION GUIDE](./TOPICS.md)
+
 </div>
 
----
+## SYSTEM OVERVIEW
 
-## `01 // About the project`
+This repository powers **https://lonzilfox.github.io/** with HTML/CSS/JavaScript, layered canvas effects (blood rain, particle constellation, spectral radar, cursor sparks), glitch fracture overlays, typed messages, synthetic packet-feed animation, interactive terminal, responsive project cards, category filters and search. Motion can be switched off with FX: OFF and honors reduced-motion accessibility preferences.
 
-The source code for **LonzilFox's personal GitHub Pages website**: a developer portfolio with a hacker terminal aesthetic, brutalist/deconstructed typography, realtime GitHub repository discovery and handcrafted project descriptions.
+**Categories are defined by GitHub repository Topics only.** No repository is classified from its name, programming language or description. The live website reads public repositories directly from GitHub; the scheduled GitHub Action also refreshes `data/projects.json` and the section below.
 
-Includes:
+## PROJECT INDEX / AUTOMATICALLY GENERATED
 
-- Animated matrix-style code rain, orbital system display, scanlines and glitch headers.
-- Working terminal commands: `help`, `whoami`, `projects`, `github`, `status`, `matrix`, `date`, `clear`.
-- Projects indexed from the **public GitHub REST API** (read-only, no API token).
-- Live search, category filters, sort modes and mobile-friendly cards.
-- Offline / API-limited fallback index, with clear sync status.
-- `FX: ON/OFF` switch and reduced-motion support.
-- Plain HTML, CSS and JavaScript; **no npm, build, or framework required**.
+<!-- AUTO-PROJECTS:START -->
 
-> The fallback project list is curated rather than verified live. When the GitHub API is available, the website displays the actual public repositories instead.
+_The first workflow run will retrieve public repositories and generate this section. No projects have been manually assigned a category._
 
-![Desktop website preview](./assets/preview.png)
+<!-- AUTO-PROJECTS:END -->
 
-## `02 // Repository layout`
+## DEPLOYMENT
+
+1. Create the public repository `LonzilFox/lonzilfox.github.io` and put **this folder's contents** at its root.
+2. Under **Settings → Pages → Build and deployment → Source**, select **GitHub Actions** (not Deploy from a branch).
+3. Under **Settings → Actions → General**, ensure Actions are permitted. Under **Workflow permissions**, allow read/write `GITHUB_TOKEN` if your account/repository defaults to read-only. The workflow declares `contents: write` for syncing the generated files.
+4. Push to `main`, or open **Actions → Sync Topics and deploy website → Run workflow**.
+5. Wait for the GitHub deployment to finish, then open [lonzilfox.github.io](https://lonzilfox.github.io/).
+
+The workflow runs on push, via manual dispatch, and roughly every **6 hours** (`.github/workflows/sync-and-deploy.yml`). Scheduled GitHub Actions may be delayed or disabled after prolonged repository inactivity. The site itself checks the GitHub API when loaded, so new public projects and topic changes normally appear on the next visitor refresh even before the scheduled sync. A snapshot is used if the API is rate-limited/offline; if both sources are missing, it shows a truthful empty/error state rather than fabricated projects.
+
+**Important:** the automatic data update is published using `actions/deploy-pages`; GitHub Actions `GITHUB_TOKEN` commits alone should not be relied on to trigger a Pages build.
+
+## CATEGORY CONTROL
+
+Set Topics in the repository's **About → ⚙ → Topics** section. Examples:
 
 ```text
-lonzilfox.github.io/
-├── index.html               # GitHub Pages entry
-├── README.md                # README on the WEBSITE repository
-├── .nojekyll                # Publish files without Jekyll processing
-├── .gitignore
-├── preview_local.bat        # Windows local preview
-├── publish_site.bat         # GitHub CLI publishing helper
-└── assets/
-    ├── style.css            # Layout / animation / responsive styles
-    ├── main.js              # UI logic / terminal / live GitHub sync
-    ├── config.js            # Featured projects & category overrides
-    ├── favicon.svg
-    ├── profile-banner.gif   # Animated README banner
-    ├── preview.png          # Desktop screenshot
-    └── preview-mobile.png   # Mobile screenshot
+category-tools   ocr   csharp   windows
+category-game    category-web   multiplayer   typescript
+category-ai      machine-learning   python
+category-security   reverse-engineering
 ```
 
-## `03 // Deploy to GitHub Pages`
+- `category-*`: category membership; multiple allowed; unknown suffix automatically becomes a new filter / README section.
+- Other Topics: additional technology/feature tags; they never select a category.
+- No `category-*`: goes to **UNCLASSIFIED**, with no name-based fallback.
+- Optional `portfolio-featured`: puts the project first in the site's Featured ordering.
+- Private repositories are never indexed. Forks without `category-*` are excluded; explicitly tagged forks are included.
+- GitHub topics: lowercase letters, digits, hyphens; at most 20 per repository.
 
-1. Create a **public** GitHub repository named **`lonzilfox.github.io`** in the `LonzilFox` account.
-2. Upload the **contents** of this directory to the repository root (not the parent packaging directory).
-3. Open **Settings → Pages → Build and deployment**.
-4. Select **Deploy from a branch** → `main` → `/ (root)` → **Save**.
-5. Open **https://lonzilfox.github.io/** once GitHub finishes publishing.
+See [TOPICS.md](./TOPICS.md) for a full explanation and the optional Windows tag editor.
 
-Or use `publish_site.bat` on Windows when Git and GitHub CLI (`gh auth login`) are set up. It does not force push.
+## FILES
 
-### Run locally
-
-Run `preview_local.bat` (Python required) or `python -m http.server 8765` in this folder and visit `http://localhost:8765/`. You can also open `index.html` directly, although an HTTP server is preferable.
-
-## `04 // Manage your project categories`
-
-Edit **[`assets/config.js`](./assets/config.js)**. Each entry uses the **exact repository name** as its key. The GitHub API provides the list of public repositories and your overrides supply their category, editorial text, tags and featured order.
-
-```js
-'ColorBlockClicker': {
-  category: 'automation', // tools | automation | ai | game | web | creative
-  also: ['tools'],        // optional secondary category / filter
-  featured: 4,
-  tagline: 'FIND THE DIFFERENCE.',
-  description: 'A compact tool for detecting color differences.',
-  tags: ['Automation', 'Vision', 'Desktop']
-}
+```text
+index.html                     Website structure
+assets/style.css               Black / blood-red theme + responsive UI
+assets/main.js                 Existing Matrix animation, terminal, GitHub Topics renderer
+assets/fx.js                   Spectral radar, cursor particles, animated feeds and typing
+assets/animations.css          Extra deconstruction layers / animations / responsive rules
+assets/profile-banner.gif      Animated README banner
+assets/favicon.svg             Icon
+data/projects.json             Generated static snapshot (not the source of truth)
+scripts/sync_repos.py          Topics-to-README and JSON generator
+.github/workflows/...          Scheduled sync + GitHub Pages deploy
+TOPICS.md                      Category rules + GitHub CLI guide
+tag_repository.bat              Interactive one-repository Topic editor
+apply_topics.bat                User-approved batch Topic editor
+topics-plan.csv                 Empty CSV plan for bulk tag assignment
+preview_local.bat              Local web preview
+README.md                      This website's README
 ```
 
-Repositories without an override are automatically classified using their names, descriptions and GitHub Topics. To improve classification, set GitHub Topics on your repos or add explicit overrides.
+No build tools, Node dependencies, PAT, or API key are required. JavaScript only reads public GitHub data. Browsers need network access to GitHub to receive instant live updates.
 
-**Data limitations:** Only public repositories can appear. GitHub may rate-limit unauthenticated requests; the page then uses its bundled fallback and reports that status. The site does not access private repositories and does not store any tokens.
+## LOCAL TEST
 
-## `05 // GitHub profile README`
+Run `preview_local.bat`, or:
 
-The file for your **actual GitHub personal profile** is in the sibling directory `../LonzilFox/README.md` of the downloadable package. GitHub treats that as a **different repository** (`LonzilFox/LonzilFox`). The two repositories are separated intentionally:
+```bash
+python -m http.server 8000
+```
 
-| Repository | What appears |
-|:--|:--|
-| `LonzilFox/lonzilfox.github.io` | Public website + this project's README |
-| `LonzilFox/LonzilFox` | Animated README displayed on your GitHub **user profile** |
+Then open `http://localhost:8000/`. For a standalone local snapshot update use `python scripts/sync_repos.py --target site --username LonzilFox` (requires access to `api.github.com`).
 
-The profile README links to your portfolio and references the animated GIF directly from this website repository.
-
----
-
-<div align="center"><code>DESIGNED TO DISRUPT / BUILT TO WORK</code></div>
+Generated regions between `AUTO-PROJECTS` markers are overwritten: edit everything outside those markers freely.
