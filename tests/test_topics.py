@@ -38,6 +38,7 @@ class TopicSyncTests(unittest.TestCase):
             (work / 'README.md').write_text(original, encoding='utf-8')
             fixture = [
                 {'name': 'GameSite', 'description': 'Game world', 'topics': ['category-game', 'category-web']},
+                {'name': 'CNTool', 'description': '这是中文描述', 'topics': ['category-tools']},
                 {'name': 'WebGameWithoutTopics', 'description': 'game and web', 'topics': ['typescript']},
                 {'name': 'Private', 'private': True, 'topics': ['category-tools']},
             ]
@@ -49,10 +50,15 @@ class TopicSyncTests(unittest.TestCase):
             self.assertIn('CUSTOM INTRO', readme)
             self.assertIn('CUSTOM FOOTER', readme)
             self.assertEqual(readme.count('**[GameSite]'), 2)
-            self.assertIn('UNCLASSIFIED', readme)
+            self.assertIn('Unclassified', readme)
             self.assertNotIn('**[Private]', readme)
             payload = json.loads((work / 'data' / 'projects.json').read_text(encoding='utf-8'))
-            self.assertEqual(len(payload['repos']), 2)
+            self.assertEqual(len(payload['repos']), 3)
+            self.assertIn('**[CNTool]', readme)
+            self.assertIn('Source repository', readme)
+            self.assertNotIn('这是中文描述', readme)
+            self.assertNotIn('分类仅依据', readme)
+            self.assertNotIn('About → Topics', readme)
             prev = readme
             subprocess.run(cmd, check=True, capture_output=True)
             self.assertEqual(prev, (work / 'README.md').read_text(encoding='utf-8'))

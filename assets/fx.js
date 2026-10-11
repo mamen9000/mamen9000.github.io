@@ -1,4 +1,4 @@
-/* Visual FX v0.0.3 // deterministic opt-out, bounded CPU and no third-party JS. */
+/* Visual FX v0.0.4 // deterministic opt-out, bounded CPU and no third-party JS. */
 (() => {
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -26,7 +26,7 @@
   // Typewritten signal; static fallback remains legible when motion is disabled.
   const typed = $('#typingSignal');
   if (typed) {
-    const phrases = ['FROM THE DIGITAL VOID.', 'BREAK THE PATTERN.', 'TRACE THE UNKNOWN.', 'WE BUILD IN THE DARK.'];
+    const phrases = ['DESKTOP APPLICATIONS.', 'AUTOMATION SYSTEMS.', 'WEB APPLICATIONS.', 'GAME DEVELOPMENT.', 'APPLIED AI.'];
     let phrase = 0, position = phrases[0].length, remove = true;
     const typeLoop = () => {
       if (!motionOn()) {
@@ -49,9 +49,9 @@
   const feed = $('#packetFeed');
   if (feed) {
     const packets = [
-      ['SYS','FRAGMENT VERIFIED'],['I/O','READING PUBLIC SIGNALS'],['TRACE','SECTOR RECONSTRUCTED'],
-      ['GIT','CATEGORY TOPIC DETECTED'],['NODE','HANDSHAKE IN PROGRESS'],['PROC','ARCHIVE INDEXED'],
-      ['SYS','ACCESS LEVEL: GUEST'],['TRACE','RED CHANNEL ACTIVE'],['GIT','SYNC WORKFLOW READY']
+      ['SYS','00A1 / 1B08 / 009F'],['I/O','40C2 / FF18 / 12B0'],['TRACE','0020 / 8A1B / 006D'],
+      ['DATA','11FF / 902C / 0A48'],['NODE','11A3 / 9800 / 0012'],['PROC','0B31 / FA22 / 109C'],
+      ['SYS','0A00 / 10F2 / 0B8D'],['TRACE','10C3 / 0F3D / 8E1B'],['DATA','92D0 / AA12 / 0B04']
     ];
     let counter = 0;
     const addPacket = () => {

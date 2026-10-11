@@ -16,7 +16,7 @@
   let search = '';
   let sort = 'featured';
   let liveFeed = false;
-  let dataSource = 'INITIALIZING';
+  let dataSource = 'LOADING';
   function readMotionPreference() { try { return window.localStorage.getItem('lf-motion'); } catch { return null; } }
   function saveMotionPreference(value) { try { window.localStorage.setItem('lf-motion', value); } catch {} }
   let motion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && readMotionPreference() !== 'off';
@@ -61,7 +61,7 @@
   }
   function setProjects(repos, source) {
     allProjects = repos.map(normalize).filter(Boolean);
-    liveFeed = source === 'GITHUB LIVE API';
+    liveFeed = source === 'GITHUB';
     dataSource = source;
     makeFilters();
     renderProjects();
@@ -77,7 +77,7 @@
     const categories = categoryKeys();
     if (filter !== 'all' && !categories.includes(filter)) filter = 'all';
     $('#filterList').innerHTML = [
-      `<button class="filter ${filter==='all'?'active':''}" data-filter="all" type="button" aria-pressed="${filter==='all'}">ALL SIGNALS <span>↗</span></button>`,
+      `<button class="filter ${filter==='all'?'active':''}" data-filter="all" type="button" aria-pressed="${filter==='all'}">ALL PROJECTS <span>↗</span></button>`,
       ...categories.map(category => `<button class="filter ${filter===category?'active':''}" style="--category-color:${badgeColor(category)}" data-filter="${category}" type="button" aria-pressed="${filter===category}">${safeText(displayCategory(category))} <small>${allProjects.filter(p=>p.categories.includes(category)).length}</small></button>`)
     ].join('');
   }
@@ -105,10 +105,10 @@
     return `<article class="project-card" style="--category-color:${badgeColor(category)}" aria-label="${safeText(project.name)}">
       <div class="card-top"><span class="card-index">◈ / ${String(index+1).padStart(2,'0')}</span><div class="card-categories">${labels}</div></div>
       <a class="card-title" href="${safeText(project.html_url)}" target="_blank" rel="noopener noreferrer">${safeText(project.name)}</a>
-      <div class="card-tagline">// ${project.archived ? 'ARCHIVED · ' : ''}${safeText(project.language || 'REPOSITORY')} / SOURCE SIGNAL</div>
-      <p class="card-description">${safeText(project.description || 'No description supplied. Explore the repository for more information.')}</p>
-      <div class="card-tags">${tech.map(t=>`<span>${safeText(t)}</span>`).join('') || '<span>NO ADDITIONAL TOPICS</span>'}</div>
-      <div class="card-bottom"><span>★ ${project.stargazers_count} / GITHUB PUBLIC</span><a class="card-arrow" href="${safeText(project.html_url)}" target="_blank" rel="noopener noreferrer" aria-label="View ${safeText(project.name)} on GitHub">↗</a></div>
+      <div class="card-tagline">// ${project.archived ? 'ARCHIVED · ' : ''}${safeText(project.language || 'REPOSITORY')}</div>
+      <p class="card-description">${safeText(project.description || '—')}</p>
+      <div class="card-tags">${tech.map(t=>`<span>${safeText(t)}</span>`).join('') || ''}</div>
+      <div class="card-bottom"><span>★ ${project.stargazers_count}</span><a class="card-arrow" href="${safeText(project.html_url)}" target="_blank" rel="noopener noreferrer" aria-label="View ${safeText(project.name)} on GitHub">↗</a></div>
     </article>`;
   }
   function renderProjects() {
@@ -116,7 +116,7 @@
     grid.innerHTML=visible.map(projectCard).join('');
     $('#projectsEmpty').hidden=visible.length>0;
     $('#projectTotal').textContent=String(allProjects.length).padStart(2,'0');
-    $('#projectStatus').textContent=`${String(visible.length).padStart(2,'0')} VISIBLE / ${dataSource} / TOPICS-ONLY CLASSIFICATION`;
+    $('#projectStatus').textContent=`${String(visible.length).padStart(2,'0')} VISIBLE / ${dataSource}`;
   }
   async function loadSnapshot() {
     try {
@@ -124,7 +124,7 @@
       if (!response.ok) throw new Error('Snapshot unavailable');
       const payload=await response.json();
       if (!Array.isArray(payload.repos)) throw new Error('Malformed snapshot');
-      setProjects(payload.repos,'SCHEDULED INDEX');
+      setProjects(payload.repos,'ARCHIVE');
     } catch(error) { console.info('[LonzilFox] Snapshot unavailable:',error.message); }
   }
   async function loadLive() {
@@ -146,11 +146,11 @@
         if(batch.length<100) break;
       }
       if(!repos.length) throw new Error('No public repositories returned');
-      setProjects(repos,'GITHUB LIVE API');
+      setProjects(repos,'GITHUB');
     } catch(error) {
       console.info('[LonzilFox] Live API unavailable:',error.message);
-      $('#feedIndicator').innerHTML=`<span class="live-dot"></span> ${allProjects.length?'SCHEDULED INDEX / LIVE OFFLINE':'GITHUB API UNAVAILABLE'}`;
-      if(!allProjects.length) {dataSource='API UNAVAILABLE';renderProjects();}
+      $('#feedIndicator').innerHTML=`<span class="live-dot"></span> ${allProjects.length?'ARCHIVE':'GITHUB UNAVAILABLE'}`;
+      if(!allProjects.length) {dataSource='OFFLINE';renderProjects();}
     }
   }
   $('#filterList').addEventListener('click', event=>{
@@ -243,11 +243,11 @@
   const output = $('#terminalOutput');
   const commandInput = $('#terminalInput');
   const terminalMessages = {
-    help: ['AVAILABLE COMMANDS:', 'help       list supported commands', 'categories list GitHub Topic sectors', 'refresh    reload public project signals', 'whoami     identify the operator', 'projects   move to project archive', 'github     open public GitHub account', 'status     show node / archive status', 'matrix     toggle the blood-rain animation', 'clear      clear terminal output', 'date       display local system time'],
-    whoami: ['USER       LonzilFox / Tiasmi', 'ROLE       Independent developer', 'CATEGORY   GitHub category-* Topics', 'MISSION    Build strange but useful things.'],
+    help: ['AVAILABLE COMMANDS:', 'help       list commands', 'categories list project categories', 'refresh    reload the repository list', 'whoami     show developer details', 'projects   scroll to projects', 'github     open public GitHub account', 'status     show repository status', 'matrix     toggle visual effects', 'clear      clear terminal output', 'date       display local system time'],
+    whoami: ['USER       LonzilFox / Tiasmi', 'ROLE       Independent developer', 'PROJECTS    Public repositories', 'FOCUS      Desktop, web, automation, games and AI.'],
     status: () => [`NODE       ONLINE`, `PUBLIC REPOS  ${allProjects.length}`, `DATA SOURCE   ${dataSource}`, `VISUAL FX     ${motion ? 'enabled' : 'disabled'}`],
     date: () => [new Date().toLocaleString()],
-    categories: () => ['CATEGORY-* TOPIC SECTORS:', ...categoryKeys().map(category => `  ${displayCategory(category)} / ${allProjects.filter(p => p.categories.includes(category)).length} REPOSITORIES`)],
+    categories: () => ['PROJECT CATEGORIES:', ...categoryKeys().map(category => `  ${displayCategory(category)} / ${allProjects.filter(p => p.categories.includes(category)).length} REPOSITORIES`)],
   };
   function line(text, kind = '') {
     const div = document.createElement('div');
@@ -265,13 +265,13 @@
     line(`guest@lonzilfox:~$ ${raw}`, 'command');
     const name = raw.split(/\s+/)[0].toLowerCase();
     if (name === 'clear') { output.textContent = ''; return; }
-    if (name === 'refresh') { line('RELOADING PUBLIC REPOSITORY TOPICS...', 'accent'); loadLive(); return; }
-    if (name === 'projects') { line('OPENING PROJECT ARCHIVE...', 'accent'); $('#projects').scrollIntoView({ behavior: motion ? 'smooth':'instant' }); return; }
-    if (name === 'github') { line('OPENING GITHUB PROFILE...', 'accent'); window.open(`https://github.com/${encodeURIComponent(account)}`, '_blank', 'noopener,noreferrer'); return; }
+    if (name === 'refresh') { line('REFRESHING REPOSITORIES...', 'accent'); loadLive(); return; }
+    if (name === 'projects') { line('PROJECTS', 'accent'); $('#projects').scrollIntoView({ behavior: motion ? 'smooth':'instant' }); return; }
+    if (name === 'github') { line('GITHUB', 'accent'); window.open(`https://github.com/${encodeURIComponent(account)}`, '_blank', 'noopener,noreferrer'); return; }
     if (name === 'matrix') { motionToggle.click(); line(`VISUAL FX: ${motion ? 'ON' : 'OFF'}`, 'accent'); return; }
     const handler = terminalMessages[name];
     if (handler) { for (const message of (typeof handler === 'function' ? handler() : handler)) line(message, 'accent'); }
-    else line(`command not found: ${name} // type 'help'`, 'error');
+    else line(`command not found: ${name}`, 'error');
   });
   document.querySelectorAll('.primary-nav a').forEach(link => link.addEventListener('click', () => {
     // Native anchor navigation; commands need no custom router.

@@ -19,13 +19,13 @@ from pathlib import Path
 START = '<!-- AUTO-PROJECTS:START -->'
 END = '<!-- AUTO-PROJECTS:END -->'
 CATEGORY_NAMES = {
-    'tools': '开发与实用工具 / Developer Tools',
-    'game': '游戏与 Mod / Games & Mods',
-    'ai': '人工智能 / AI & Vision',
-    'automation': '自动化 / Automation',
-    'web': '网站与应用 / Web & Apps',
-    'creative': '创作与像素 / Creative',
-    'security': '安全研究 / Security',
+    'tools': 'Developer Tools',
+    'game': 'Games & Mods',
+    'ai': 'AI & Vision',
+    'automation': 'Automation',
+    'web': 'Web & Apps',
+    'creative': 'Creative',
+    'security': 'Security',
 }
 CATEGORY_ORDER = list(CATEGORY_NAMES)
 CATEGORY_PATTERN = re.compile(r'^category-([a-z0-9]+(?:-[a-z0-9]+)*)$')
@@ -43,7 +43,7 @@ def categories(topics):
 
 def name_for(category):
     if category == 'unclassified':
-        return '未分类 / UNCLASSIFIED'
+        return 'Unclassified'
     return CATEGORY_NAMES.get(category, category.replace('-', ' ').upper())
 
 
@@ -75,7 +75,7 @@ def github_repositories(username, token):
         headers = {
             'Accept': 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28',
-            'User-Agent': 'LonzilFox-TopicSync/0.0.3',
+            'User-Agent': 'LonzilFox-TopicSync/0.0.4',
         }
         if token:
             headers['Authorization'] = f'Bearer {token}'
@@ -114,19 +114,19 @@ def grouped_markdown(repos):
     ordered = ([name for name in CATEGORY_ORDER if name in groupings]
                + sorted(k for k in groupings if k not in CATEGORY_ORDER and k != 'unclassified')
                + (['unclassified'] if 'unclassified' in groupings else []))
-    lines = [f'**{len(repos)} public repositories** · 分类仅依据 GitHub `category-*` Topics · 多标签工程可出现在多个类别。', '']
-    if not ordered:
-        lines += ['_当前没有可展示的公开仓库。_', '']
+    lines = [f'**{len(repos)} repositories**', '']
     for i, category in enumerate(ordered, 1):
         members = sorted(groupings[category], key=lambda item: item['name'].casefold())
         lines.extend([f'#### {i:02d} // {name_for(category)} ({len(members)})', ''])
         for item in members:
             other_topics = [t for t in item['topics'] if not t.startswith('category-')]
             suffix = ' · ' + ', '.join(f'`{md_escape(t)}`' for t in other_topics[:4]) if other_topics else ''
-            desc = md_escape(item['description']) or 'Repository / Source code'
+            desc = md_escape(item['description'])
+            if re.search(r'[\u2e80-\u9fff]', desc):
+                desc = ''
+            desc = desc or 'Source repository'
             lines.append(f'- **[{md_escape(item["name"])}]({item["html_url"]})** — {desc}{suffix}')
         lines.append('')
-    lines.extend(['_需要调整分类？进入对应仓库 About → Topics，增加或移除 `category-*` 标签即可。_', ''])
     return '\n'.join(lines).rstrip()
 
 
